@@ -10,10 +10,10 @@ let timerNum = 0;
 
 function Game () {
     function makeGame(width, height, bombNum) {
-        
+
         //지뢰 갯수
         let remainingMine = bombNum;
-        mineNum.textContent = '남은 지뢰의 갯수 : ' + remainingMine;
+        mineNum.textContent = 'Remaining Mines : ' + remainingMine;
 
         const makeRandomNum = () => {
             //지뢰 랜덤 리스트 생성
@@ -38,7 +38,6 @@ function Game () {
             chunk_size *= 1;
             arrayLength *= 1;
             for (index = 0; index < arrayLength; index += chunk_size) {
-                console.log(index);
                 myChunk = numArray.slice(index, index+chunk_size);
                 bombArray.push(myChunk);
             }
@@ -49,7 +48,6 @@ function Game () {
         chunkArray(numArray, width);
 
         rowArray = [];
-
         //열을 하나씩 만들면서 안에 블럭 생성
         for (let i = 0; i < height; i++) {
             const row = [];
@@ -75,25 +73,30 @@ function Game () {
                 row.push(cell);
 
                 block.addEventListener('click', function() {
-                    cell['clicked'] = true;
-                    block.classList.add('clicked');
+                    let classCheck = block.classList.contains('marked');
+                    if (classCheck !== true) {
+                        cell['clicked'] = true;
+                        block.classList.add('clicked');
 
-                    if (cell['isMine'] === 1) {
-                        return gameOver(1);
-                    }
-                    
-                    const neighbors = getNeighbors(cell);
-                    console.log(neighbors);
-                    cell.block.textContent = neighbors.filter(neighbor => neighbor.isMine === 1).length;
-                    mineCount = neighbors.filter(neighbor => neighbor.isMine === 1).length;
-
-                    if (mineCount === 0) {
-                        for (i=0; i<neighbors.length; i++) {
-                            neighbors[i]['clicked'] =true;
-                            neighbors[i]['block'].classList.add('clicked');
+                        if (cell['isMine'] === 1) {
+                            return gameOver(1);
+                        }
+                        
+                        const neighbors = getNeighbors(cell);
+                        console.log(neighbors);
+                        cell.block.textContent = neighbors.filter(neighbor => neighbor.isMine === 1).length;
+                        mineCount = neighbors.filter(neighbor => neighbor.isMine === 1).length;
+    
+                        if (mineCount === 0) {
+                            for (i=0; i<neighbors.length; i++) {
+                                neighbors[i]['clicked'] =true;
+                                neighbors[i]['block'].classList.add('clicked');
+                            }
                         }
                     }
+
                     
+                    mineClickedCheck(mineArray);
                 });
                 
                 //우클릭 깃발
@@ -105,12 +108,27 @@ function Game () {
                         cell['marked'] = true;
                         block.classList.add('marked');
                         remainingMine--;
-                        mineNum.textContent = '남은 지뢰의 갯수 : ' + remainingMine;
+                        mineNum.textContent = 'Remaining Mines : ' + remainingMine;
                     };
-
+                    mineClickedCheck(mineArray);
                 });
             }
         }
+
+        let mineArray = [];
+        const finish = (rowArray) => {
+            console.log('게임끝함수');
+
+            for (let i=0; i<rowArray.length; i++) {
+                for(let j=0; j < rowArray[0].length; j++) {
+                    if(rowArray[i][j]['isMine']) {
+                        mineArray.push(rowArray[i][j]);
+                    }
+                }
+            }
+        }
+        finish(rowArray);
+        console.log('지뢰목록 : ', mineArray);
     }
         
 
@@ -124,18 +142,7 @@ makeGame(5, 5, 3);
     });
 
     restart.addEventListener('click', function() {
-        deleteGame();
-        timerNum = 0;
-
-        const bombNum2 = document.getElementById('bomb').value;
-        const width2 = document.getElementById('width').value;
-        const height2 = document.getElementById('height').value;
-
-        if(bombNum2 !== "" && width2 !== "" && height2!==""){
-            makeGame(width2, height2, bombNum2);
-        } else {
-            makeGame(5,5,3);
-        }
+        restartGame();
     })
 
     //기존 게임 제거
@@ -165,6 +172,21 @@ makeGame(5, 5, 3);
         }
     }
 
+    //리스타트
+    const restartGame = () => {
+        deleteGame();
+        timerNum = 0;
+
+        const bombNum2 = document.getElementById('bomb').value;
+        const width2 = document.getElementById('width').value;
+        const height2 = document.getElementById('height').value;
+
+        if(bombNum2 !== "" && width2 !== "" && height2!==""){
+            makeGame(width2, height2, bombNum2);
+        } else {
+            makeGame(5,5,3);
+        }
+    }
         
     //지뢰 발견
     const gameOver = (bomb) => {
@@ -214,24 +236,35 @@ makeGame(5, 5, 3);
         timer.textContent = 'Timer : ' + timerNum + '초';
     }, 1000)
 
-    const gameFinish = (rowArray) => {
-        console.log('게임끝함수');
-        const row = document.querySelector('.row');
-        let width = row.childElementCount;
-        let rowLength = rowArray.length;
-        
-        for (i=0; i<rowLength; i++) {
-            for(j=0; i<width; i++) {
-                console.log(rowArray[i][j]);
-                if(rowArray[i][j]['isMine']===true) {
-                    console.log(rowArray[i][j]);
+
+    const mineClickedCheck = (mineArray) => {
+        let mineNotClicked = 0;
+        let justCellClicked = 0;
+
+        for(let i=0; i < mineArray.length; i++) {
+            if(mineArray[i]['clicked']===false || mineArray[i]['marked']===true) {
+                mineNotClicked++;
+            }
+        }
+
+        for (let i=0; i<rowArray.length; i++) {
+            for(let j=0; j < rowArray[0].length; j++) {
+                if(rowArray[i][j]['isMine']===0) {
+                    if(rowArray[i][j]['clicked'] || rowArray[i][j]['marked']) {
+                        justCellClicked++;
+                    }
                 }
             }
         }
+
+        if(mineNotClicked + justCellClicked === rowArray.length*rowArray[0].length) {
+            const finishedGame = setTimeout(function() {
+                alert('지뢰찾기에 성공하셨습니다!');
+                restartGame();
+            }, 300)
+        }
+        console.log('남은지뢰:', mineNotClicked, '클릭한셀:', justCellClicked);
     }
-
-    gameFinish(rowArray);
-
 
 }
 

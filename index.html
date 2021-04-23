@@ -4,21 +4,26 @@
         <link rel="stylesheet" href="./styles.css"/>
     </head>
     <body>
-        <div>
+        <div class="whole">
             <h1>Mine Sweeper</h1>
 
             <!--지뢰 갯수 입력 받기-->
             넓이 <input type = "number" id = "width" min="5" max="30"></input>
             높이 <input type = "number" id = "height" min="5" max="30"></input>
+            <br>
+            <br>
             지뢰의 수 <input type = "number" id = "bomb" min="0" ></input>
             <button type = "submit" id = "confirm"> 게임 만들기 </button> 
-            <button type = "submit" id = "restart"> 재시작 </button> 
-            <br></br>
+            <br>
+            <br>
             <div id = "mineNum"> </div>
             <div id = "timer"> Timer : 0초</div>
-            <br></br>
+            <br>
+            <button type = "submit" id = "restart"> 재시작 </button>
+            <br>
             <div id="gameBoard">
             </div>
+            
         </div>
         <script src="game2.js"></script>
     </body>

@@ -1,5 +1,21 @@
+body {
+    background: url("https://wallpapercave.com/wp/wp2754864.jpg") center / cover;
+}
+
+.whole {
+    width: fit-content;
+    margin: auto;
+    background-color: white;
+    margin-top: 100px;
+    padding: 50px;
+    border-radius: 20px;
+}
+
 h1 {
-    color: deeppink;
+    text-align: center;
+    margin: 0;
+    margin-bottom: 37px;
+    color: black;
 }
 
 .row {
@@ -7,10 +23,11 @@ h1 {
     flex-direction: row;
 }
 .block {
-    border: 1px solid #ccc;
+    border: 3px solid #ccc;
     padding: 3px;
-    width: 30px;
-    height: 30px;
+    width: 50px;
+    height: 50px;
+
 }
 
 .clicked {
@@ -22,4 +39,35 @@ h1 {
 .marked {
     background: url("https://funfasr656.weebly.com/uploads/1/2/5/4/125434180/741491052.png") center / cover;
     
+}
+
+#gameboard {
+    width: fit-content;
+    border: 3px solid #ccc;
+    background-color: white;
+}
+
+#restart {
+    margin-bottom: 10px;
+    width: 100%;
+    height: 30px;
+}
+
+
+#mineNum {
+    font-weight: 400;
+    margin-bottom: 10px;
+    color: rgb(0, 102, 218);
+}
+
+#timer {
+    font-weight: 400;
+    color: rgb(21, 170, 90);
+}
+
+#width, #height, #bomb, #confirm, #restart{
+    border-top: 2px solid #ffffff;
+    border-right: 2px solid #7B7B7B;
+    border-bottom: 2px solid #7B7B7B;
+    border-left: 2px solid #ffffff;
 }
