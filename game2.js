@@ -43,7 +43,7 @@ function Game () {
                 bombArray.push(myChunk);
             }
 
-            console.log(bombArray);
+            //console.log(bombArray);
         }
 
         chunkArray(numArray, width);
@@ -211,8 +211,26 @@ makeGame(5, 5, 3);
     //타이머
     const timerFun = setInterval(function(){
         timerNum++;
-        timer.textContent = '지속시간 : ' + timerNum + '초';
+        timer.textContent = 'Timer : ' + timerNum + '초';
     }, 1000)
+
+    const gameFinish = (rowArray) => {
+        console.log('게임끝함수');
+        const row = document.querySelector('.row');
+        let width = row.childElementCount;
+        let rowLength = rowArray.length;
+        
+        for (i=0; i<rowLength; i++) {
+            for(j=0; i<width; i++) {
+                console.log(rowArray[i][j]);
+                if(rowArray[i][j]['isMine']===true) {
+                    console.log(rowArray[i][j]);
+                }
+            }
+        }
+    }
+
+    gameFinish(rowArray);
 
 
 }
