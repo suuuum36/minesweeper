@@ -71,3 +71,8 @@ h1 {
     border-bottom: 2px solid #7B7B7B;
     border-left: 2px solid #ffffff;
 }
+
+.bomb {
+    background-color: red;
+    background : url("https://e7.pngegg.com/pngimages/570/659/png-clipart-microsoft-minesweeper-land-mine-minesweeper-classic-fr-windows-minesweeper-video-game-snout.png") center / cover;
+}
