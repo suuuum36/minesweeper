@@ -30,16 +30,16 @@ function Game () {
 
         makeRandomNum();
         
-        function chunkArray(numArray, chunk_size){
+        function chunkArray(numArray, dividingLength){
             let index = 0;
             let arrayLength = numArray.length;
             bombArray = [];
 
-            chunk_size *= 1;
+            dividingLength *= 1;
             arrayLength *= 1;
-            for (index = 0; index < arrayLength; index += chunk_size) {
-                myChunk = numArray.slice(index, index+chunk_size);
-                bombArray.push(myChunk);
+            for (index = 0; index < arrayLength; index += dividingLength) {
+                tempArray = numArray.slice(index, index+dividingLength);
+                bombArray.push(tempArray);
             }
 
             //console.log(bombArray);
