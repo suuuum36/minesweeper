@@ -25,7 +25,7 @@ function Game () {
                 numArray.push(0);
             }
             numArray.sort(() => Math.random() - 0.5)
-            console.log(numArray);
+            //console.log(numArray);
         }
 
         makeRandomNum();
@@ -41,10 +41,8 @@ function Game () {
                 tempArray = numArray.slice(index, index+dividingLength);
                 bombArray.push(tempArray);
             }
-
             //console.log(bombArray);
         }
-
         chunkArray(numArray, width);
 
         rowArray = [];
@@ -117,7 +115,7 @@ function Game () {
 
         let mineArray = [];
         const finish = (rowArray) => {
-            console.log('게임끝함수');
+            //console.log('게임끝함수');
 
             for (let i=0; i<rowArray.length; i++) {
                 for(let j=0; j < rowArray[0].length; j++) {
@@ -128,7 +126,7 @@ function Game () {
             }
         }
         finish(rowArray);
-        console.log('지뢰목록 : ', mineArray);
+        //console.log('지뢰목록 : ', mineArray);
     }
         
 
@@ -164,7 +162,7 @@ makeGame(5, 5, 3);
         const height2 = document.getElementById('height').value;
 
         if(width2>=5 && width2<=30 && height2>=5 && height2<=30 && bombNum2>0 && bombNum2<=width2*height2 && bombNum2 !== ""){
-            console.log('makeGame 실행');
+            //console.log('makeGame 실행');
             makeGame(width2, height2, bombNum2);
         } else if (width2<5 || width2>30 || height2<5 || height2>30){
             alert('판의 크기는 높이와 넓이 각 5이상 30이하입니다.');
@@ -266,7 +264,7 @@ makeGame(5, 5, 3);
                 restartGame();
             }, 300)
         }
-        console.log('남은지뢰:', mineNotClicked, '클릭한셀:', justCellClicked);
+        //console.log('남은지뢰:', mineNotClicked, '클릭한셀:', justCellClicked);
     }
 
 
